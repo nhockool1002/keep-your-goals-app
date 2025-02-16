@@ -1,0 +1,100 @@
+# 🔥 General files to ignore
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# 🔥 Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.log
+debug.log
+output.log
+
+# 🔥 Ignore build artifacts
+dist/
+build/
+.cache/
+coverage/
+out/
+tmp/
+temp/
+
+# 🔥 Ignore dependencies & package managers
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 🔥 Ignore macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 🔥 Ignore Expo & React Native files
+.expo/
+.expo-shared/
+.expo-cli/
+metro.config.js
+
+# 🔥 Ignore Android build files
+android/.gradle/
+android/.idea/
+android/local.properties
+android/app/build/
+android/build/
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/res/xml/network_security_config.xml
+
+# 🔥 Ignore iOS build files
+ios/Pods/
+ios/build/
+ios/.DS_Store
+ios/.xcworkspace/
+ios/DerivedData/
+ios/node_modules/
+ios/Podfile.lock
+ios/xcuserdata/
+
+# 🔥 Ignore Docker files
+docker/data/
+docker/db/
+docker/logs/
+docker-compose.override.yml
+
+# 🔥 Ignore database dumps
+database/*.sql
+database/dump/
+database/backup/
+
+# 🔥 Ignore test coverage files
+coverage/
+.nyc_output/
+jest/
+cypress/screenshots/
+cypress/videos/
+
+# 🔥 Ignore Firebase files (nếu dùng Firebase)
+firebase-debug.log
+firestore-debug.log
+serviceAccountKey.json
+
+# 🔥 Ignore miscellaneous
+*.swp
+*.swo
+*.bak
+*.tmp
+*.pid
