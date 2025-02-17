@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@types/winston": "^2.4.4"
+  }
+}

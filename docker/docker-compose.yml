@@ -1,0 +1,113 @@
+version: '3.8'
+
+networks:
+  keep-your-goals-nwt:
+    driver: bridge
+
+services:
+  be-keep-your-goals:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: be-keep-your-goals
+    working_dir: /app
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://goals999:goals999@db-keep-your-goals:5432/keep_your_goals_db
+      - REDIS_HOST=redis-keep-your-goals
+      - REDIS_PORT=6379
+    depends_on:
+      - db-keep-your-goals
+      - redis-keep-your-goals
+    networks:
+      - keep-your-goals-nwt
+
+  db-keep-your-goals:
+    image: postgres:latest
+    container_name: db-keep-your-goals
+    restart: always
+    environment:
+      POSTGRES_USER: goals999
+      POSTGRES_PASSWORD: goals999
+      POSTGRES_DB: keep_your_goals_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - keep-your-goals-nwt
+
+  redis-keep-your-goals:
+    image: redis:latest
+    container_name: redis-keep-your-goals
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - keep-your-goals-nwt
+
+  pgadmin-keep-your-goals:
+    image: dpage/pgadmin4
+    container_name: pgadmin-keep-your-goals
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: goals999@admin.com
+      PGADMIN_DEFAULT_PASSWORD: goals999
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db-keep-your-goals
+    networks:
+      - keep-your-goals-nwt
+
+  redisinsight-keep-your-goals:
+    image: redis/redisinsight:latest
+    container_name: redisinsight-keep-your-goals
+    restart: always
+    ports:
+      - "5540:5540"
+    volumes:
+      - redisinsightdata:/data
+    depends_on:
+      - redis-keep-your-goals
+    networks:
+      - keep-your-goals-nwt
+
+  elasticsearch-keep-your-goals:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    container_name: elasticsearch-keep-your-goals
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - keep-your-goals-nwt
+
+  kibana-keep-your-goals:
+    image: docker.elastic.co/kibana/kibana:7.17.9
+    container_name: kibana-keep-your-goals
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch-keep-your-goals:9200
+    networks:
+      - keep-your-goals-nwt
+
+volumes:
+  pgdata:
+  redisdata:
+  redisinsightdata:
+  esdata:
+  pgadmin-data:
