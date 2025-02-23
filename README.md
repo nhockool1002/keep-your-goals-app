@@ -57,6 +57,14 @@ yarn add @prisma/client
 yarn add -D prisma @faker-js/faker
 ```
 
+Command create module service controller
+```
+nest g module {PAPAP}
+nest g service {PAPAP}
+nest g controller {PAPAP}
+nest g resource {PAPAP} ~> Lệnh tạo nhanh
+```
+
 ### Setup PGADMIN 
 ```
 NAME: KEEP YOUR GOAL APP (or anything)
