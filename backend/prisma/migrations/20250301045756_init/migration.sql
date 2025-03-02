@@ -1,3 +1,9 @@
+-- CreateEnum
+CREATE TYPE "GoalType" AS ENUM ('TODOANYTHING', 'TODOQUANTITY', 'SAVEMONEY');
+
+-- CreateEnum
+CREATE TYPE "GoalStatus" AS ENUM ('TODO', 'IN_PROGRESS', 'DONE');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -8,6 +14,7 @@ CREATE TABLE "User" (
     "subscription_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isAdmin" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -58,18 +65,30 @@ CREATE TABLE "UserSubscription" (
 CREATE TABLE "Goal" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
+    "type" "GoalType" NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
     "start_date" TIMESTAMP(3) NOT NULL,
     "end_date" TIMESTAMP(3) NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "GoalStatus" NOT NULL,
     "quantity" INTEGER,
     "amount" DOUBLE PRECISION,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "current" DOUBLE PRECISION DEFAULT 0.0,
+    "atmm" DOUBLE PRECISION DEFAULT 0.0,
 
     CONSTRAINT "Goal_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "GoalLabel" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "GoalLabel_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -104,6 +123,14 @@ CREATE TABLE "Settings" (
     CONSTRAINT "Settings_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "_GoalToGoalLabel" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_GoalToGoalLabel_AB_pkey" PRIMARY KEY ("A","B")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
@@ -119,14 +146,20 @@ CREATE INDEX "idx_goals_user_id" ON "Goal"("user_id");
 -- CreateIndex
 CREATE INDEX "idx_goals_status" ON "Goal"("status");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "GoalLabel_name_key" ON "GoalLabel"("name");
+
+-- CreateIndex
+CREATE INDEX "_GoalToGoalLabel_B_index" ON "_GoalToGoalLabel"("B");
+
 -- AddForeignKey
 ALTER TABLE "UserAuthProvider" ADD CONSTRAINT "UserAuthProvider_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserSubscription" ADD CONSTRAINT "UserSubscription_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "UserSubscription" ADD CONSTRAINT "UserSubscription_subscription_id_fkey" FOREIGN KEY ("subscription_id") REFERENCES "Subscription"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserSubscription" ADD CONSTRAINT "UserSubscription_subscription_id_fkey" FOREIGN KEY ("subscription_id") REFERENCES "Subscription"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "UserSubscription" ADD CONSTRAINT "UserSubscription_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Goal" ADD CONSTRAINT "Goal_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -139,3 +172,9 @@ ALTER TABLE "GoalStatistics" ADD CONSTRAINT "GoalStatistics_goal_id_fkey" FOREIG
 
 -- AddForeignKey
 ALTER TABLE "Settings" ADD CONSTRAINT "Settings_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_GoalToGoalLabel" ADD CONSTRAINT "_GoalToGoalLabel_A_fkey" FOREIGN KEY ("A") REFERENCES "Goal"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_GoalToGoalLabel" ADD CONSTRAINT "_GoalToGoalLabel_B_fkey" FOREIGN KEY ("B") REFERENCES "GoalLabel"("id") ON DELETE CASCADE ON UPDATE CASCADE;

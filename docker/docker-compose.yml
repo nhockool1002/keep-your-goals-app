@@ -105,6 +105,17 @@ services:
     networks:
       - keep-your-goals-nwt
 
+  dozzle-keep-your-goals:
+    image: amir20/dozzle:latest
+    container_name: dozzle-keep-your-goals
+    restart: always
+    ports:
+      - "9022:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - keep-your-goals-nwt
+
 volumes:
   pgdata:
   redisdata:
