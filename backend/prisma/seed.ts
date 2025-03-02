@@ -64,12 +64,12 @@ async function main() {
     const goals = await prisma.goal.createMany({
         data: allUsers.map(user => ({
             userId: user.id,
-            type: faker.helpers.arrayElement(["DoSomething", "Quantity", "Financial"]),
+            type: faker.helpers.arrayElement(["TODOANYTHING", "TODOQUANTITY", "SAVEMONEY"]),
             title: faker.lorem.words(3),
             description: faker.lorem.sentence(),
             startDate: faker.date.past(),
             endDate: faker.date.future(),
-            status: faker.helpers.arrayElement(["Planning", "InProgress", "Done", "Failed"]),
+            status: faker.helpers.arrayElement(["TODO", "IN_PROGRESS", "DONE"]),
         })),
     });
     logger.info("Fr NestJS [Seeding Goals] completed.");

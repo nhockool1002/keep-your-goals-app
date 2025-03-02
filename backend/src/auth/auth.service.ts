@@ -14,26 +14,25 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(email: string, password: string, username?: string) {
+  async register(lmid: string, email: string, password: string, username?: string) {
     try {
-      logger.info(`>> Fr NestJS [Auth Service][Register]: email ${email}, username ${username} ready to create user account`);
+      logger.info(`>> Fr NestJS [Auth Service][Register] ${lmid}: email ${email}, username ${username} ready to create user account`);
   
       if (!password) {
-        throw new Error("Password is required");
+        throw new Error(`${lmid}: Password is required`);
       }
   
-      // Kiểm tra username có bị trùng không
       if (username) {
         const existingUser = await this.prisma.user.findUnique({
           where: { username },
         });
         if (existingUser) {
-          throw new BadRequestException("Username already exists");
+          throw new BadRequestException(`${lmid}: Username already exists`);
         }
       }
   
       const hashedPassword = await bcrypt.hash(password, 10);
-      logger.info(`>> Fr NestJS [Auth Service][Register]: generate hashed password success`);
+      logger.info(`>> Fr NestJS [Auth Service][Register] ${lmid}: generate hashed password success`);
   
       const user = await this.prisma.user.create({
         data: { 
@@ -43,9 +42,9 @@ export class AuthService {
         },
       });
   
-      const token = this.jwtService.sign({ userId: user.id, email: user.email });
+      const token = this.jwtService.sign({ userId: user.id, email: user.email, isAdmin: user.isAdmin });
   
-      logger.info(`> Fr NestJS [Auth Service][Register]: User ${username} created successful.`);
+      logger.info(`> Fr NestJS [Auth Service][Register] ${lmid}: User ${username} created successful.`);
       return { 
         accessToken: token, 
         user: {
@@ -56,38 +55,38 @@ export class AuthService {
         }
       };
     } catch (error) {
-      logger.error(`>>> Fr NestJS [Auth Service][Register]: Error during registration - ${error.message}`);
+      logger.error(`>>> Fr NestJS [Auth Service][Register] ${lmid}: Error during registration - ${error.message}`);
       
       if (error.code === 'P2002') {
-        throw new BadRequestException("Email or Username already exists");
+        throw new BadRequestException(`${lmid}: Email or Username already exists`);
       }
   
-      throw new InternalServerErrorException(error.message);
+      throw new InternalServerErrorException(`${lmid}: ${error.message}`);
     }
   }
 
-  async login(email: string, password: string) {
+  async login(lmid: string, email: string, password: string) {
     try {
-      logger.info(`>> Fr NestJS [Auth Service][Login]: email ${email} attempting to log in`);
+      logger.info(`>> Fr NestJS [Auth Service][Login] ${lmid}: email ${email} attempting to log in`);
   
       const user = await this.prisma.user.findUnique({
         where: { email },
       });
       if (!user) {
-        throw new UnauthorizedException("Invalid credentials");
+        throw new UnauthorizedException(`${lmid}: Invalid credentials`);
       }
   
       if (!user.passwordHash) {
-        throw new UnauthorizedException("User registered via social login. Please use the respective provider to log in.");
+        throw new UnauthorizedException(`${lmid}: User registered via social login. Please use the respective provider to log in.`);
       }
   
       const passwordValid = await bcrypt.compare(password, user.passwordHash || '');
       if (!passwordValid) {
-        throw new UnauthorizedException("Invalid credentials");
+        throw new UnauthorizedException(`${lmid}: Invalid credentials`);
       }
   
-      const token = this.jwtService.sign({ userId: user.id, email: user.email });
-      logger.info(`>> Fr NestJS [Auth Service][Login]: user ${user.username} login successful.`);
+      const token = this.jwtService.sign({ userId: user.id, email: user.email, isAdmin: user.isAdmin });
+      logger.info(`>> Fr NestJS [Auth Service][Login] ${lmid}: user ${user.username} login successful.`);
       return {
         accessToken: token,
         user: {
@@ -98,8 +97,8 @@ export class AuthService {
         }
       };
     } catch (error) {
-      logger.error(`>>> Fr NestJS [Auth Service][Login]: Error during login - ${error.message}`);
-      throw new InternalServerErrorException(error.message);
+      logger.error(`>>> Fr NestJS [Auth Service][Login]${lmid}: Error during login - ${error.message}`);
+      throw new InternalServerErrorException(`${lmid}: ${error.message}`);
     }
   }
   

@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { logger } from "../utils/logger";
+import { generateRandomCode } from '../utils/func';
 
 @Controller('v1/auth')
 export class AuthController {
@@ -14,8 +15,9 @@ export class AuthController {
     @Body('password') password: string,
     @Body('username') username?: string
   ) {
-    logger.info(`Fr NestJS [Auth Controller][Register]: email ${email}, username ${username}`);
-    return this.authService.register(email, password, username);
+    const code = generateRandomCode();
+    logger.info(`>> Fr NestJS [Auth Controller][Register] ${code}: email ${email}, username ${username}`);
+    return this.authService.register(code, email, password, username);
   }
 
   @Post('login')
@@ -23,8 +25,9 @@ export class AuthController {
     @Body('email') email: string,
     @Body('password') password: string
   ) {
-    logger.info(`Fr NestJS [Auth Controller][Login]: email ${email}`);
-    return this.authService.login(email, password);
+    const code = generateRandomCode();
+    logger.info(`>> Fr NestJS [Auth Controller][Login] ${code}: email ${email}`);
+    return this.authService.login(code, email, password);
   }
 
   @Get()

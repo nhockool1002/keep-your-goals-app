@@ -3,8 +3,9 @@
 Backend API: http://localhost:3000
 PostgreSQL: localhost:5432
 pgAdmin: http://localhost:5050 (goals999@admin.com/goals999)
-RedisInsight: http://localhost:8001
+RedisInsight: http://localhost:5540
 Kibana: http://localhost:5601/
+Dozzle: http://localhost:9022/
 
 ## DATABASE 
 
