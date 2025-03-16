@@ -1,0 +1,42 @@
+{
+    "register": "Register",
+    "registering": "Registering",
+    "login": "Login",
+    "logging_in": "Logging",
+    "username": "Username",
+    "email": "Email Address",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "about_us": "About Us",
+    "goals_list": "Goals",
+    "welcome": "Welcome !",
+    "goals_title": "Your Goals",
+    "add_goal": "Add Goal",
+    "goal_feature_coming_soon": "🚀 This feature is coming soon!",
+    "close": "Close",
+    "goal_do_something": "Do something",
+    "goal_do_something_example": "For example, travel to Thailand.",
+    "goal_number": "Number",
+    "goal_number_example": "For example, read 12 books. Or get 1000 followers on social media.",
+    "goal_money": "Money",
+    "goal_money_example": "For example, save fixed amount of money.",
+    "goal_status_todo": "To Do",
+    "goal_status_in_progress": "In Progress",
+    "goal_status_done": "Done",
+    "do_something_goal": "Do Something",
+    "do_something_eg": "For example, take a trip across Vietnam.",
+    "number_goal": "Quantity Goal",
+    "number_goal_eg": "For example, read 12 detective novels in 3 months.",
+    "money_goal": "Money Goal",
+    "money_goal_eg": "For example, save $100,000 by 2025.",
+    "validation": {
+        "min_6_max_25_error": "must be 6 to 25 characters",
+        "is_invalid": "is invalid",
+        "is_not_correct": "is incorrect"
+    },
+    "error": {
+        "registration_failed": "Registration failed.",
+        "login_failed": "Login failed.",
+        "server_internal_error": "Server Internal Error occured!"
+    }
+}

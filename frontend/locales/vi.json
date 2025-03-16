@@ -1,0 +1,42 @@
+{
+    "register": "Đăng Ký",
+    "registering": "Đang Đăng Ký",
+    "login": "Đăng Nhập",
+    "logging_in": "Đang Đăng Nhập",
+    "username": "Tên người dùng",
+    "email": "Địa chỉ email",
+    "password": "Mật khẩu",
+    "confirm_password": "Xác nhận mật khẩu",
+    "about_us": "Về Chúng Tôi",
+    "goals_list": "Mục tiêu",
+    "welcome": "Chào bạn !",
+    "goals_title": "Mục Tiêu Của Bạn",
+    "add_goal": "Thêm mục tiêu",
+    "goal_feature_coming_soon": "🚀 Tính năng này sẽ sớm ra mắt!",
+    "close": "Đóng",
+    "goal_do_something": "Làm điều gì đó",
+    "goal_do_something_example": "Ví dụ, đi du lịch Thái Lan.",
+    "goal_number": "Số lượng",
+    "goal_number_example": "Ví dụ, đọc 12 cuốn sách. Hoặc đạt 1000 người theo dõi trên mạng xã hội.",
+    "goal_money": "Tiền bạc",
+    "goal_money_example": "Ví dụ, tiết kiệm một số tiền cố định.",
+    "goal_status_todo": "Lên kết hoạch",
+    "goal_status_in_progress": "Đang thực hiện",
+    "goal_status_done": "Hoàn thành",
+    "do_something_goal": "Làm một điều gì đó",
+    "do_something_eg": "Ví dụ, thực hiện một chuyến xuyên Việt.",
+    "number_goal": "Mục Tiêu Số Lượng",
+    "number_goal_eg": "Ví dụ, đọc 12 cuốn tiểu thuyết trinh thám trong 3 tháng.",
+    "money_goal": "Mục Tiêu Tài Chính",
+    "money_goal_eg": "Ví dụ, tiết kiệm $100.000 trong năm 2025.",
+    "validation": {
+        "min_6_max_25_error": "phải từ 6 đến 25 ký tự.",
+        "is_invalid": "không hợp lệ.",
+        "is_not_correct": "không khớp."
+    },
+    "error": {
+        "registration_failed": "Đăng ký không thành công.",
+        "login_failed": "Đăng nhập không thành công.",
+        "server_internal_error": "Xảy ra lỗi không xác định!"
+    }
+}
