@@ -1,4 +1,6 @@
 import type { PropsWithChildren, ReactElement } from 'react';
+import { useState, useEffect } from 'react';
+import * as Device from 'expo-device';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
@@ -8,7 +10,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { ThemedView } from '@/components/ThemedView';
-import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 const HEADER_HEIGHT = 250;
@@ -26,7 +27,16 @@ export default function ParallaxScrollView({
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
-  const bottom = useBottomTabOverflow();
+  const [deviceName, setDeviceName] = useState<string | null>(null);
+  const [deviceId, setDeviceId] = useState<string | null>(null);
+
+  useEffect(() => {
+          setDeviceId(Device.osInternalBuildId);
+          setDeviceName(Device.modelName);
+  }, []);
+
+  console.log(`>> ${deviceName} - ${deviceId} colorScheme is ${colorScheme}`);
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -49,8 +59,7 @@ export default function ParallaxScrollView({
       <Animated.ScrollView
         ref={scrollRef}
         scrollEventThrottle={16}
-        scrollIndicatorInsets={{ bottom }}
-        contentContainerStyle={{ paddingBottom: bottom }}>
+        contentContainerStyle={{ paddingBottom: 20 }}> 
         <Animated.View
           style={[
             styles.header,

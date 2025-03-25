@@ -1,44 +1,57 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "Keep Your Goals",
+    "slug": "keep-your-goals",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./assets/icon.png",
+    "scheme": "keep-your-goals",
     "userInterfaceStyle": "automatic",
+    "backgroundColor": "#000000",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/icon.png",
+      "bundleIdentifier": "com.nhockool1002.keepyourgoals",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIViewControllerBasedStatusBarAppearance": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#000000"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "image": "./assets/splash.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#000000"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "API_URL": "http://localhost:3000"
+      "API_URL": "https://15c4-2402-800-63a7-bc01-2dc7-f7cd-9380-54dd.ngrok-free.app",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "029347ea-7497-4917-93ea-b07b750d6c34"
+      }
     }
   }
 }

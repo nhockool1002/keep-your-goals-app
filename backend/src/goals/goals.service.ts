@@ -47,6 +47,17 @@ export class GoalsService {
           current: true,
           createdAt: true,
           updatedAt: true,
+          goalHistory: {
+            select: {
+              id: true,
+              status: true,
+              note: true,
+              updatedAt: true
+            },
+            orderBy: {
+              updatedAt: 'desc'
+            }
+          }
         },
       });
   
