@@ -29,6 +29,12 @@
     "number_goal_eg": "Ví dụ, đọc 12 cuốn tiểu thuyết trinh thám trong 3 tháng.",
     "money_goal": "Mục Tiêu Tài Chính",
     "money_goal_eg": "Ví dụ, tiết kiệm $100.000 trong năm 2025.",
+    "settings": "Cài Đặt",
+    "app_info": "Thông tin ứng dụng",
+    "logout": "Đăng xuất",
+    "show_done_goals": "Hiện các mục tiêu đã hoàn thành",
+    "hide_done_goals": "Ẩn các mục tiêu đã hoàn thành",
+    "status": "Trạng thái",
     "validation": {
         "min_6_max_25_error": "phải từ 6 đến 25 ký tự.",
         "is_invalid": "không hợp lệ.",

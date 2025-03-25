@@ -29,6 +29,12 @@
     "number_goal_eg": "For example, read 12 detective novels in 3 months.",
     "money_goal": "Money Goal",
     "money_goal_eg": "For example, save $100,000 by 2025.",
+    "settings": "Settings",
+    "app_info": "Application Information",
+    "logout": "Log Out",
+    "show_done_goals": "Show Done Goals",
+    "hide_done_goals": "Hide Done Goals",
+    "status": "Status",
     "validation": {
         "min_6_max_25_error": "must be 6 to 25 characters",
         "is_invalid": "is invalid",

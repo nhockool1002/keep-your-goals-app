@@ -7,6 +7,13 @@ export const lightTheme = {
   headerBgColor: '#cb70ff',
   headerTextColor: '#FFFFFF',
   bgModalAddGoal: '#1c1421',
-  textColorTitleModalAddGoal: '#FFFFFF'
+  textColorTitleModalAddGoal: '#FFFFFF',
+  dstBgColorGoal: '#44364a',
+  datBgColorGoal: '#44364a',
+  smBgColorGoal: '#44364a',
+  homeBgColor: '#ffd4fe',
+  goalTitleTextColor: '#FFFFFF',
+  calendarE: 'green',
+  calendarB: 'yellow',
+  calendarO: 'red',
 };
-  

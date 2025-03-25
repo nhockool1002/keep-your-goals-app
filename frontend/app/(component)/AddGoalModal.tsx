@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import DoSomethingGoal from "../(component)/DoSomethingGoal";
 import NumberGoal from "../(component)/NumberGoal";
 import MoneyGoal from "../(component)/MoneyGoal";
@@ -13,49 +13,68 @@ interface AddGoalModalProps {
   onClose: () => void;
   theme: typeof lightTheme;
   t: (key: string) => string;
+  onSubmit?: () => void;
 }
 
-const AddGoalModal: React.FC<AddGoalModalProps> = ({ isVisible, onClose, theme, t }) => {
-  const [selectedGoal, setSelectedGoal] = useState<"do" | "number" | "money" | null>(null);
+const AddGoalModal: React.FC<AddGoalModalProps> = ({ isVisible, onClose, theme, t, onSubmit }) => {
+  const [selectedGoalType, setSelectedGoalType] = useState<"do" | "number" | "money" | null>(null);
 
-  // Đóng modal và reset state
   const handleClose = () => {
-    setSelectedGoal(null);
+    setSelectedGoalType(null);
     onClose();
+  };
+
+  const handleSaved = () => {
+    if (onSubmit) {
+      onSubmit();
+    }
+    handleClose();
+  };
+
+  const commonProps = {
+    visible: !!selectedGoalType,
+    mode: "add" as const,
+    onClose: handleClose,
+    onSaved: handleSaved,
+    t,
+    onSubmit,
   };
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={handleClose}>
       <View style={styles.modalContainer}>
         <View style={[styles.modalContent, { backgroundColor: theme.bgModalAddGoal }]}>
-          {/* Nếu không có mục tiêu nào được chọn, hiển thị danh sách */}
-          {!selectedGoal ? (
+          {!selectedGoalType ? (
             <>
               <Text style={[styles.modalTitle, { color: theme.textColorTitleModalAddGoal }]}>{t("add_goal")}</Text>
 
-              {/* Hiển thị 3 loại goal */}
-              <TouchableOpacity style={{ width: "100%" }} onPress={() => setSelectedGoal("do")}>
-                <DoSomethingGoal t={t} theme={theme} />
-              </TouchableOpacity>
-              <TouchableOpacity style={{ width: "100%" }} onPress={() => setSelectedGoal("number")}>
-                <NumberGoal t={t} theme={theme} />
-              </TouchableOpacity>
-              <TouchableOpacity style={{ width: "100%" }} onPress={() => setSelectedGoal("money")}>
-                <MoneyGoal t={t} theme={theme} />
-              </TouchableOpacity>
+              <Pressable style={{ width: "100%" }} onPress={() => setSelectedGoalType("do")}>
+                <View>
+                  <DoSomethingGoal t={t} theme={theme} />
+                </View>
+              </Pressable>
 
+              <Pressable style={{ width: "100%" }} onPress={() => setSelectedGoalType("number")}>
+                <View>
+                  <NumberGoal t={t} theme={theme} />
+                </View>
+              </Pressable>
 
-              {/* Nút đóng */}
-              <TouchableOpacity onPress={handleClose}>
+              <Pressable style={{ width: "100%" }} onPress={() => setSelectedGoalType("money")}>
+                <View>
+                  <MoneyGoal t={t} theme={theme} />
+                </View>
+              </Pressable>
+
+              <Pressable onPress={handleClose}>
                 <Text style={styles.closeText}>{t("close")}</Text>
-              </TouchableOpacity>
+              </Pressable>
             </>
           ) : (
             <>
-              {/* Hiển thị chi tiết theo loại Goal được chọn */}
-              {selectedGoal === "do" && <DoSomethingGoalDetails onClose={handleClose} t={t} />}
-              {selectedGoal === "number" && <NumberGoalDetails onClose={handleClose} t={t} />}
-              {selectedGoal === "money" && <MoneyGoalDetails onClose={handleClose} t={t} />}
+              {selectedGoalType === "do" && <DoSomethingGoalDetails {...commonProps} />}
+              {selectedGoalType === "number" && <NumberGoalDetails {...commonProps} />}
+              {selectedGoalType === "money" && <MoneyGoalDetails {...commonProps} />}
             </>
           )}
         </View>
@@ -90,5 +109,6 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     fontWeight: "bold",
+    marginTop: 16,
   },
 });
